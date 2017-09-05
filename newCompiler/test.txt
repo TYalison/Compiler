@@ -1,0 +1,124 @@
+const char ch = 'A';
+int steps, no_disk;
+int index_fibo;
+int Fibonacci(int n)
+{
+	if (n == 0)
+	{
+		return(0);
+	}
+	if (n == 1)
+	{
+		return(1);
+	}
+	return(Fibonacci(n-1)+Fibonacci(n-2));
+}
+void move(int n, char _from, char _to)
+{
+	steps = steps + 1;
+	printf("Step ", steps);
+	printf(": move disk ", n);
+	printf(" from ", _from);
+	printf(" to ", _to);
+	printf("..");
+}
+void Hanoi(char _a, char _b, char _c, int n)
+{
+	if (n > 10)
+	{
+		printf("Too many disks..");
+	}
+	else if (n < 1)
+	{
+		printf("No disk found..");
+	}
+	else
+	{
+		if (n != 1)
+		{
+			Hanoi(_a, _c, _b, n - 1);
+			move(n, _a, _c);
+			Hanoi(_b, _a, _c, n - 1);
+		}
+		else move(n, _a, _c);
+	}
+}
+void printPrime(int n)
+{
+	int i, j;
+	int array[100];
+	if (n < 2) printf("No prime found..");
+	else if (n > 100) printf("Unexpected large area..");
+	else
+	{
+		i = 2;
+		while (i <= n)
+		{
+			array[i] = 1;
+			i = i + 1;
+		}
+		i = 2;
+		while (i <= n)
+		{
+			if (array[i] == 1)
+			{
+				j = i + i;
+				while (j <= n)
+				{
+					array[j] = 0;
+					j = j + i;
+				}
+			}
+			i = i + 1;
+		}
+		printf("Expected primes are:");
+		i = 2;
+		while (i <= n)
+		{
+			if (array[i] == 1) printf(" ", i);
+			i = i + 1;
+		}
+	}
+	return;
+}
+void main()
+{
+	int choice, area;
+	char ch_temp;
+	ch_temp =('T'-1+2-1)*1/1;	
+	steps = 0;
+	printf("Please choose a number from [1,4]: ");
+	scanf(choice);
+	switch(choice)
+	{
+	case 1:
+	{
+		printf("Game 1: Hanoi..");
+		printf("Please input the number of disks within [1,10]: ");
+		scanf(no_disk);
+		Hanoi('A', 'B', 'C', no_disk);
+	}
+	case 2: 
+	{
+		printf("Game 2: Fibonacci..");
+		printf("Please input the index of Fibonacci: ");
+		scanf(index_fibo);
+		printf("Expected result: ", Fibonacci(index_fibo));
+	}
+	case 3:
+	{
+		printf("Game 3: Prime..");
+		printf("Please input the upper bound: ");
+		scanf(area);
+		printPrime(area);
+	}
+	case 4:
+	{
+		printf('T');
+		printf(ch);
+		printf(ch_temp);
+	}
+	default:printf("Error: invalid chosen number..");
+	}
+	return;
+}
